@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Level;
 
 class LevelController extends Controller
 {
@@ -14,7 +15,7 @@ class LevelController extends Controller
      */
     public function index()
     {
-        //
+      return Level::all();
     }
 
     /**
@@ -46,7 +47,7 @@ class LevelController extends Controller
      */
     public function show($id)
     {
-        //
+        return Level::findOrFail($id);
     }
 
     /**
@@ -67,9 +68,13 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $level = Level::find($id);
+        $level->name = $req->name;
+
+        $level->save();
+        return $level;
     }
 
     /**

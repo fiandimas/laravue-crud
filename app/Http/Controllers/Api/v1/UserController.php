@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Hash;
 
 class UserController extends Controller
 {
@@ -34,9 +35,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+      $user = new User();
+      $user->name = $req->name;
+      $user->username = $req->username;
+      $user->password = Hash::make($req->password);
+      $user->address = $req->address;
+      $user->id_level = $req->id_level;
+
+      $user->save();
+      return $user;
     }
 
     /**
@@ -68,9 +77,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $user = User::find($id);
+        $user->update($req->all());
+
+        return $user;
     }
 
     /**
@@ -81,6 +93,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      User::findOrFail($id)->delete();
+      return '';
     }
 }
