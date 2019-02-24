@@ -22,13 +22,14 @@
             </div>
           </div>
         </div>
-
+        
         <div class="col-md-5">
           <div class="panel panel-default">
             <div class="panel-heading">Level</div>
             <div class="panel-body">
               <div id="level">
                 <router-view name="levelIndex"></router-view>
+                <router-view></router-view>
               </div>
             </div>
           </div>
