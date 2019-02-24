@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('address');
             $table->integer('id_level')->unsigned();
-            $table->foreign('id_level')->references('id')->on('users');
+            $table->foreign('id_level')->references('id')->on('levels');
             $table->timestamps();
         });
     }
