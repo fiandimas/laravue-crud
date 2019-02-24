@@ -8,6 +8,16 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueRouter from 'vue-router';
+
+window.Vue.use(VueRouter)
+
+import UserIndex from './components/user/Index';
+import UserCreate from './components/user/Create';
+import UserEdit from './components/user/Edit';
+
+import LevelIndex from './components/level/Index';
+import LevelEdit from './components/level/Edit';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,8 +25,48 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+const routes = [
+  {
+    path: '/',
+    components: {
+      userIndex: UserIndex,
+      levelIndex: LevelIndex
+    }
+  },
+  {
+    path: '/user/create',
+    components: {
+      userIndex: UserCreate,
+      levelIndex: LevelIndex
+    },
+    name: 'createUser'
+  },
+  {
+    path: '/user/edit/:id',
+    components: {
+      userIndex: UserEdit,
+      levelIndex: LevelIndex
+    },
+    name: 'editUser'
+  },
+  {
+    path: '/level/edit/:id',
+    components: {
+      userIndex: UserIndex,
+      levelIndex: LevelEdit
+    },
+    name: 'levelEdit'
+  }
+]
 
-const app = new Vue({
-    el: '#app'
-});
+const router = new VueRouter({
+  routes
+})
+
+const user = new Vue({
+    router
+}).$mount('#user');
+
+const level = new Vue({
+  router
+}).$mount('#level');
