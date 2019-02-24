@@ -26,7 +26,7 @@
               <td>{{ user.id_level }}</td>
               <td>
                 <router-link :to = "{name: 'editUser', params: {id:user.id}}" class="btn btn-warning">Edit</router-link>
-                <a href="#" class="btn btn-danger" v-on:click="cek(user.id)">Delete</a>
+                <a href="#" class="btn btn-danger" v-on:click="deleteUser(user.id,index)">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -39,7 +39,7 @@
   export default {
     data() {
       return {
-        user: [],
+        user: []
       }
     },
     mounted() {
@@ -50,11 +50,14 @@
            })
     },
     methods: {
-      cek(id){
-        console.log(id)
-      },
-      ok(){
-
+      deleteUser(id,index){
+        if(confirm('Are you sure to delete this ?')){
+          let app = this
+          axios.delete('http://localhost:8000/api/v1/user/' + id)
+                .then((resp) => {
+                  app.user.splice(index,1)
+                })
+        }
       }
     },
   }
